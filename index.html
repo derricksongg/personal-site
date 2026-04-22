@@ -1,195 +1,559 @@
 <!DOCTYPE html>
-<!-- ^ Tells the browser: "this is an HTML5 document." It must be the first line. -->
-
 <html lang="en">
-<!-- ^ The root element. EVERYTHING on the page lives inside <html>...</html>.
-     lang="en" tells browsers and screen readers the page is in English. -->
-
 <head>
-  <!-- <head> holds metadata ABOUT the page. Nothing in here shows up on the page itself. -->
-
   <meta charset="UTF-8">
-  <!-- ^ Use UTF-8 text encoding. Without this, accents, emoji, and non-English characters break. -->
-
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Derrick Song — aspiring law student targeting NYU Law School.">
   <title>Derrick Song</title>
-  <!-- ^ The text that shows in the browser tab. Also what Google shows in search results. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lora:ital,wght@0,400;1,400&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    /* ─── Design tokens ─────────────────────────────────── */
+    :root {
+      --bg:         #0C0D12;
+      --bg-card:    #131420;
+      --fg:         #EDE5D5;
+      --fg-muted:   #8B8375;
+      --accent:     #C0873B;
+      --accent-dim: #8C5E23;
+      --line:       #222436;
 
-  <style> 
-     body {
-       font-family: system-ui, sans-serif;
-       max-width: 640px;
-       margin: 2rem auto;
-       padding: 1rem;
-       line-height: 1.6;
-       color: #81AE9D;
-       background-color: #1E1E24;
-     }
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'Lora', Georgia, serif;
+      --font-mono:    'Space Mono', 'Courier New', monospace;
 
-     a {
-          color: #FB9F89;
-          text-decoration: none;
-     }
+      --hero-name-size: clamp(3.5rem, 12vw, 8.5rem);
+      --t: 350ms ease;
+    }
 
-     a:hover {
-          text-decoration: underline;
-     }
+    body.light-mode {
+      --bg:         #F5F0E8;
+      --bg-card:    #EDE5D5;
+      --fg:         #2A1F0F;
+      --fg-muted:   #6B5E4A;
+      --accent:     #8C5E23;
+      --accent-dim: #C0873B;
+      --line:       #D4C9B5;
+    }
 
-     h1 {
-          color: #81AE9D;
-     }
+    /* ─── Reset ─────────────────────────────────────────── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-     p {
-          color: #C4AF9A;
-     }
-     body.light-mode {
-          background-color: #fafafa;
-          color: #44695a;
-     }
+    /* ─── Base ───────────────────────────────────────────── */
+    html { scroll-behavior: smooth; }
 
-     body.light-mode a{
-          color: #912507;
-     }
+    body.site {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.75;
+      min-height: 100vh;
+      transition: background-color var(--t), color var(--t);
+    }
 
-      body.light-mode h1 {
-          color: #44695a;
-     }
-     
-     body.light-mode p {
-          color: #574533;
-     }
-     
-#scales {
-  display: block;
-  margin: 2rem auto;
-  color: #c4af9a79;
-  position: sticky;
-  top: 1rem;
-  z-index: 10;
-  overflow: visible;
-}
+    a { color: var(--accent); text-decoration: none; transition: color var(--t); }
+    a:hover { color: var(--fg); }
 
-  body.light-mode #scales {
-    color: #423b3385;
-   /* no background, no padding */
-  }
+    /* ─── Grain overlay ──────────────────────────────────── */
+    .grain {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      pointer-events: none;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      background-repeat: repeat;
+      animation: grainShift 8s steps(1) infinite;
+    }
 
-  #beam {
-  transform-origin: 100px 40px;
-  transform-box: view-box;
-  transform: rotate(35deg);
-  transition: transform 200ms ease-out;
-}
+    /* ─── Theme button ───────────────────────────────────── */
+    .theme-btn {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      z-index: 999;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: var(--bg-card);
+      color: var(--fg-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      transition: color var(--t), background-color var(--t), border-color var(--t), transform 150ms ease;
+    }
 
-     * {
-          transition: color 300ms ease, background-color 300ms ease;
-     }
+    .theme-btn:hover {
+      color: var(--accent);
+      border-color: var(--accent-dim);
+      transform: scale(1.08);
+    }
+
+    .theme-btn svg {
+      width: 1rem;
+      height: 1rem;
+      fill: currentColor;
+    }
+
+    /* ─── Main layout ────────────────────────────────────── */
+    .site-main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 1.5rem 6rem;
+    }
+
+    /* ─── Hero ───────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 0 4rem;
+      overflow: hidden;
+    }
+
+    .hero-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--fg);
+      opacity: 0;
+      pointer-events: none;
+      user-select: none;
+      animation: watermarkIn 2.5s ease both;
+      animation-delay: 0.3s;
+      transition: color var(--t);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-label {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+      transition: color var(--t);
+      animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation-delay: 0.1s;
+    }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: var(--hero-name-size);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      line-height: 0.95;
+      color: var(--fg);
+      text-transform: uppercase;
+      transition: color var(--t);
+      animation: fadeUp 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation-delay: 0.25s;
+    }
+
+    .hero-tagline {
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 2.5vw, 1.375rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--fg-muted);
+      margin-top: 1rem;
+      letter-spacing: 0.01em;
+      transition: color var(--t);
+      animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation-delay: 0.5s;
+    }
+
+    .hero-rule {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 2.5rem auto;
+      width: min(320px, 80%);
+      animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation-delay: 0.7s;
+    }
+
+    .hero-rule__line {
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+      transition: background-color var(--t);
+    }
+
+    .hero-rule__diamond {
+      color: var(--accent);
+      font-size: 0.5rem;
+      line-height: 1;
+      transition: color var(--t);
+    }
+
+    .hero-links {
+      display: inline-flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation-delay: 0.85s;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.375rem 1.125rem;
+      border: 1px solid var(--accent-dim);
+      border-radius: 2px;
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: transparent;
+      transition: color var(--t), background-color var(--t), border-color var(--t);
+    }
+
+    .pill:hover {
+      background: var(--accent-dim);
+      color: var(--fg);
+      border-color: var(--accent);
+    }
+
+    /* ─── Scales (scroll-animated) ──────────────────────── */
+    .scales-wrap {
+      display: flex;
+      justify-content: center;
+      padding: 2.5rem 0;
+      position: sticky;
+      top: 1rem;
+      z-index: 10;
+    }
+
+    #scales {
+      display: block;
+      color: var(--accent);
+      opacity: 0.55;
+      overflow: visible;
+      transition: color var(--t), opacity var(--t);
+    }
+
+    #scales:hover { opacity: 0.8; }
+
+    #beam {
+      transform-origin: 100px 40px;
+      transform-box: view-box;
+      transform: rotate(35deg);
+      transition: transform 200ms ease-out;
+    }
+
+    /* ─── Sections ───────────────────────────────────────── */
+    .sections {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      padding-top: 4rem;
+    }
+
+    .section {
+      background: var(--bg-card);
+      border-left: 2px solid var(--accent-dim);
+      border-radius: 0 4px 4px 0;
+      padding: 2.5rem 2.5rem 2.5rem calc(2.5rem - 2px);
+      opacity: 0;
+      transform: translateY(2rem);
+      transition:
+        opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+        background-color var(--t),
+        border-color var(--t);
+    }
+
+    .section.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--line);
+      transition: border-color var(--t);
+    }
+
+    .section-numeral {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1.5rem;
+      color: var(--accent);
+      line-height: 1;
+      flex-shrink: 0;
+      transition: color var(--t);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.25rem, 3vw, 1.875rem);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--fg);
+      line-height: 1.2;
+      padding-bottom: 3px;
+      background-image: linear-gradient(90deg, var(--accent), transparent);
+      background-size: 100% 1px;
+      background-repeat: no-repeat;
+      background-position: 0 100%;
+      transition: color var(--t);
+    }
+
+    .section-body p {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--fg-muted);
+      transition: color var(--t);
+    }
+
+    .section:hover .section-body p { color: var(--fg); }
+
+    /* ─── Keyframes ──────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(1.5rem); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes watermarkIn {
+      from { opacity: 0; }
+      to   { opacity: 0.065; }
+    }
+
+    @keyframes grainShift {
+      0%   { transform: translate(0,    0   ); }
+      20%  { transform: translate(-2px,  1px); }
+      40%  { transform: translate( 1px, -2px); }
+      60%  { transform: translate(-1px,  2px); }
+      80%  { transform: translate( 2px, -1px); }
+      100% { transform: translate(0,    0   ); }
+    }
+
+    /* ─── Responsive ─────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .hero { padding: 4rem 0 3rem; }
+      .hero-watermark svg { width: 260px; height: 208px; }
+      .section { padding: 1.5rem 1.5rem 1.5rem calc(1.5rem - 2px); }
+      .theme-btn { top: 1rem; right: 1rem; }
+    }
+
+    @media (max-width: 400px) {
+      :root { --hero-name-size: clamp(2.75rem, 14vw, 3.5rem); }
+    }
+
+    /* ─── Reduced motion ─────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-label, .hero-name, .hero-tagline,
+      .hero-rule, .hero-links {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+      .hero-watermark { animation: none; opacity: 0.065; }
+      .grain { animation: none; }
+      .section {
+        opacity: 1;
+        transform: none;
+        transition: background-color var(--t), border-color var(--t);
+      }
+    }
   </style>
 </head>
 
-<body>
-  <!-- <body> holds what ACTUALLY appears on the page. -->
+<body class="site">
 
-  <h1>Derrick Song
-  </h1>
-  <!-- ^ h1 = "heading level 1" — the biggest, most important heading.
-       A page should have exactly one h1. Think of it as the page's title. -->
+  <div class="grain" aria-hidden="true"></div>
 
-  <p>I am an aspiring law student.</p>
-  <!-- ^ p = "paragraph" — normal body text. -->
-<svg id="scales" viewBox="0 0 200 160" width="200" height="160" aria-label="Scales of Justice" role="img">
-  <!-- Base: wide block at the bottom -->
-  <rect x="64" y="144" width="72" height="8" fill="currentColor"/>
+  <button class="theme-btn" id="theme-toggle" aria-label="Switch to light mode"></button>
 
-  <!-- Vertical post: runs from base to pivot -->
-  <rect x="96" y="40" width="8" height="108" fill="currentColor"/>
+  <main class="site-main">
 
-  <!-- Rotating group: beam, chains, and pans. This is what tilts. -->
-  <g id="beam">
-    <!-- Horizontal beam (centered at x=100, y=40 so it rotates nicely) -->
-    <rect x="32" y="36" width="136" height="8" fill="currentColor"/>
+    <header class="hero">
+      <!-- Large decorative watermark behind the name -->
+      <div class="hero-watermark" aria-hidden="true">
+        <svg viewBox="0 0 200 160" width="380" height="304" aria-hidden="true">
+          <rect x="64" y="144" width="72" height="8" fill="currentColor"/>
+          <rect x="96" y="40" width="8" height="108" fill="currentColor"/>
+          <g>
+            <rect x="32" y="36" width="136" height="8" fill="currentColor"/>
+            <rect x="38" y="44" width="4" height="28" fill="currentColor"/>
+            <rect x="20" y="72" width="40" height="4" fill="currentColor"/>
+            <rect x="22" y="76" width="36" height="4" fill="currentColor"/>
+            <rect x="26" y="80" width="28" height="4" fill="currentColor"/>
+            <rect x="158" y="44" width="4" height="28" fill="currentColor"/>
+            <rect x="140" y="72" width="40" height="4" fill="currentColor"/>
+            <rect x="142" y="76" width="36" height="4" fill="currentColor"/>
+            <rect x="146" y="80" width="28" height="4" fill="currentColor"/>
+          </g>
+        </svg>
+      </div>
 
-    <!-- Left chain -->
-    <rect x="38" y="44" width="4" height="28" fill="currentColor"/>
+      <div class="hero-content">
+        <p class="hero-label">Candidate &middot; NYU Law</p>
+        <h1 class="hero-name">Derrick Song</h1>
+        <p class="hero-tagline">I am an aspiring law student.</p>
+        <div class="hero-rule" aria-hidden="true">
+          <span class="hero-rule__line"></span>
+          <span class="hero-rule__diamond">&#9670;</span>
+          <span class="hero-rule__line"></span>
+        </div>
+        <nav class="hero-links" aria-label="Contact links">
+          <a class="pill" href="https://www.linkedin.com/in/derrick-song-8023b720a">LinkedIn</a>
+          <a class="pill" href="mailto:derricksong9@gmail.com">Email me</a>
+        </nav>
+      </div>
+    </header>
 
-    <!-- Left pan: stepped trapezoid, three rows for the "cup" shape -->
-    <rect x="20" y="72" width="40" height="4" fill="currentColor"/>
-    <rect x="22" y="76" width="36" height="4" fill="currentColor"/>
-    <rect x="26" y="80" width="28" height="4" fill="currentColor"/>
+    <!-- Scales of Justice — scroll-animated -->
+    <div class="scales-wrap">
+      <svg id="scales" viewBox="0 0 200 160" width="140" height="112" aria-label="Scales of Justice" role="img">
+        <rect x="64" y="144" width="72" height="8" fill="currentColor"/>
+        <rect x="96" y="40" width="8" height="108" fill="currentColor"/>
+        <g id="beam">
+          <rect x="32" y="36" width="136" height="8" fill="currentColor"/>
+          <rect x="38" y="44" width="4" height="28" fill="currentColor"/>
+          <rect x="20" y="72" width="40" height="4" fill="currentColor"/>
+          <rect x="22" y="76" width="36" height="4" fill="currentColor"/>
+          <rect x="26" y="80" width="28" height="4" fill="currentColor"/>
+          <rect x="158" y="44" width="4" height="28" fill="currentColor"/>
+          <rect x="140" y="72" width="40" height="4" fill="currentColor"/>
+          <rect x="142" y="76" width="36" height="4" fill="currentColor"/>
+          <rect x="146" y="80" width="28" height="4" fill="currentColor"/>
+        </g>
+      </svg>
+    </div>
 
-    <!-- Right chain -->
-    <rect x="158" y="44" width="4" height="28" fill="currentColor"/>
+    <div class="sections">
 
-    <!-- Right pan: mirror of left -->
-    <rect x="140" y="72" width="40" height="4" fill="currentColor"/>
-    <rect x="142" y="76" width="36" height="4" fill="currentColor"/>
-    <rect x="146" y="80" width="28" height="4" fill="currentColor"/>
-  </g>
-</svg>
-  <h2>Links</h2>
-  <!-- ^ h2 = "heading level 2" — a section heading, smaller than h1.
-       The numbers (h1-h6) are semantic, not just visual size. -->
-  <ul>
-    <!-- ^ ul = "unordered list" — renders as bullet points. -->
+      <section class="section" id="about">
+        <div class="section-header">
+          <span class="section-numeral">I.</span>
+          <h2 class="section-title">About</h2>
+        </div>
+        <div class="section-body">
+          <p>
+            I am currently studying for the LSAT. My progress has been steady, and I am seeing improvement in my scores. I am also reading a lot of legal materials to familiarize myself with the language and concepts of law.
+            I hope to gain admission to a reputable law school and pursue a career in law. My dream law school would be NYU, but I am open to other options as well. I am excited about the journey ahead and the opportunities that law school will provide for personal and professional growth.
+          </p>
+        </div>
+      </section>
 
-    <li><a href="https://www.linkedin.com/in/derrick-song-8023b720a">LinkedIn</a></li>
-    <li><a href="mailto:derricksong9@gmail.com">Email me</a></li>
-    <!-- li = "list item" (one bullet).
-         a = "anchor" (a link). The href attribute says where the link goes.
-         mailto: opens the user's email client. -->
-  </ul>
+      <section class="section" id="focus">
+        <div class="section-header">
+          <span class="section-numeral">II.</span>
+          <h2 class="section-title">Current Focus</h2>
+        </div>
+        <div class="section-body">
+          <p>
+            Learning how to think like a lawyer. This skill would be highly necessary for law school and legal practice, and it involves analyzing complex problems, identifying relevant facts and legal principles, and applying them to reach a well-reasoned conclusion. I am also working on developing my writing skills, as clear and persuasive writing is essential for success in law school and the legal profession. Additionally, I am trying to stay informed about current legal issues and developments to better understand the context in which lawyers operate. Overall, my current focus is on building a strong foundation of legal knowledge and skills that will prepare me for the challenges of law school and a career in law.
+            Adjusting my attitude toward legal problem-solving.
+          </p>
+        </div>
+      </section>
 
-  <section>
-    <h2>About</h2>
-    <p>
-      I am currently studying for the LSAT. My progress hass been steady, and I am seeing improvement in my scores. I am also reading a lot of legal materials to familiarize myself with the language and concepts of law.
-      I hope to gain admission to a reputable law school and pursue a career in law. My dream law school would be NYU, but I am open to other options as well. I am excited about the journey ahead and the opportunities that law school will provide for personal and professional growth.
-    </p>
-  </section>
+      <section class="section" id="why-law">
+        <div class="section-header">
+          <span class="section-numeral">III.</span>
+          <h2 class="section-title">Why Law</h2>
+        </div>
+        <div class="section-body">
+          <p>
+            My goal is to contribute to a more just and equitable society through the practice of law. I would also like to familiarize myself with the legal system and how it works, and to use that knowledge to help others navigate legal issues and advocate for their rights. I am also interested in the intellectual challenge of law, as it requires critical thinking, analysis, and creativity. Additionally, I want to develop my communication skills and learn how to effectively advocate for clients and causes that I care about. Overall, I see law as a powerful tool for making a positive impact in the world and I am excited to pursue this path.
+            I had a short stint in real estate law and found that I really enjoyed the problem-solving and client interaction. I want to keep exploring different areas of law to find the best fit for my skills and passions.
+          </p>
+        </div>
+      </section>
 
-  <section>
-    <h2>Current focus</h2>
-    <p>
-      Learning how to think like a lawyer. This skill would be highly necessary for law school and legal practice, and it involves analyzing complex problems, identifying relevant facts and legal principles, and applying them to reach a well-reasoned conclusion. I am also working on developing my writing skills, as clear and persuasive writing is essential for success in law school and the legal profession. Additionally, I am trying to stay informed about current legal issues and developments to better understand the context in which lawyers operate. Overall, my current focus is on building a strong foundation of legal knowledge and skills that will prepare me for the challenges of law school and a career in law.
-      Adjusting my attitude toward legal problem-solving.
-    </p>
-  </section>
-
-  <section>
-    <h2>Why law</h2>
-    <p>
-      My goal is to contribute to a more just and equitable society through the practice of law. I would also like to familiarize myself with the legal system and how it works, and to use that knowledge to help others navigate legal issues and advocate for their rights. I am also interested in the intellectual challenge of law, as it requires critical thinking, analysis, and creativity. Additionally, I want to develop my communication skills and learn how to effectively advocate for clients and causes that I care about. Overall, I see law as a powerful tool for making a positive impact in the world and I am excited to pursue this path.
-      I had a short stint in real estate law and found that I really enjoyed the problem-solving and client interaction. I want to keep exploring different areas of law to find the best fit for my skills and passions.  
-    </p>
-  </section>
-
-  <button id="theme-toggle">Toggle theme</button>
+    </div>
+  </main>
 
   <script>
-  // Theme toggle (existing code)
-  const button = document.getElementById('theme-toggle');
-  button.addEventListener('click', () => {
-    document.body.classList.toggle('light-mode');
-  });
+    // Theme toggle with icon swap + localStorage persistence
+    const themeBtn = document.getElementById('theme-toggle');
+    const ICON_SUN  = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="5"/><g stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></g></svg>`;
+    const ICON_MOON = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
 
-  // Scales tilt animation
-  const beam = document.getElementById('beam');
-  const maxTilt = 35; // degrees of tilt at the top of the page
+    function applyTheme(isLight) {
+      document.body.classList.toggle('light-mode', isLight);
+      themeBtn.innerHTML = isLight ? ICON_MOON : ICON_SUN;
+      themeBtn.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    }
 
-  function updateBeam() {
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    themeBtn.addEventListener('click', () => applyTheme(!document.body.classList.contains('light-mode')));
 
-    // Guard against dividing by zero if the page is too short to scroll
-    const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+    const saved = localStorage.getItem('theme');
+    if (saved === 'light') { applyTheme(true); } else { themeBtn.innerHTML = ICON_SUN; }
 
-    // Clamp progress to the 0-1 range (in case of overscroll bounce)
-    const clamped = Math.min(Math.max(progress, 0), 1);
+    // Scales tilt — scroll-animated, rAF-throttled
+    const beam = document.getElementById('beam');
+    const maxTilt = 35;
 
-    const tilt = maxTilt * (1 - clamped);
-    beam.style.transform = `rotate(${tilt}deg)`;
-  }
+    function updateBeam() {
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+      const clamped = Math.min(Math.max(progress, 0), 1);
+      beam.style.transform = `rotate(${maxTilt * (1 - clamped)}deg)`;
+    }
 
-  updateBeam(); // run once on page load so the beam starts tilted
-  window.addEventListener('scroll', updateBeam);
-</script>
+    updateBeam();
+    let rafPending = false;
+    window.addEventListener('scroll', () => {
+      if (!rafPending) {
+        rafPending = true;
+        requestAnimationFrame(() => { updateBeam(); rafPending = false; });
+      }
+    }, { passive: true });
+
+    // Section scroll-reveal via IntersectionObserver
+    const sections = document.querySelectorAll('.section');
+    if ('IntersectionObserver' in window) {
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            obs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      sections.forEach((s, i) => {
+        s.style.transitionDelay = `${i * 0.12}s`;
+        obs.observe(s);
+      });
+    } else {
+      sections.forEach(s => s.classList.add('is-visible'));
+    }
+  </script>
 </body>
 </html>
