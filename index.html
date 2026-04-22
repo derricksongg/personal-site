@@ -59,20 +59,26 @@
      }
      
 #scales {
-    display: block;
-    margin: 2rem auto;
-    color: #C4AF9A;
-    position: sticky;
-    top: 1rem;
-    background-color: #1E1E24;
-    padding: 1rem;
-    z-index: 10;
-  }
+  display: block;
+  margin: 2rem auto;
+  color: #c4af9a85;
+  position: sticky;
+  top: 1rem;
+  z-index: 10;
+  /* no background, no padding */
+}
 
   body.light-mode #scales {
-    color: #574533;
-    background-color: #fafafa;
-  };
+    color: #423b3385;
+   /* no background, no padding */
+  }
+
+  #beam {
+  transform-origin: 100px 40px;
+  transform-box: view-box;
+  transform: rotate(35deg);
+  transition: transform 200ms ease-out;
+}
 
      * {
           transition: color 300ms ease, background-color 300ms ease;
@@ -128,15 +134,15 @@
   <section>
     <h2>About</h2>
     <p>
-      I am currently studying for the LSAT.
-      I hope to gain admission to a reputable law school and pursue a career in law.
+      I am currently studying for the LSAT. My progress hass been steady, and I am seeing improvement in my scores. I am also reading a lot of legal materials to familiarize myself with the language and concepts of law.
+      I hope to gain admission to a reputable law school and pursue a career in law. My dream law school would be NYU, but I am open to other options as well. I am excited about the journey ahead and the opportunities that law school will provide for personal and professional growth.
     </p>
   </section>
 
   <section>
     <h2>Current focus</h2>
     <p>
-      Learning how to think like a lawyer.
+      Learning how to think like a lawyer. This skill would be highly necessary for law school and legal practice, and it involves analyzing complex problems, identifying relevant facts and legal principles, and applying them to reach a well-reasoned conclusion. I am also working on developing my writing skills, as clear and persuasive writing is essential for success in law school and the legal profession. Additionally, I am trying to stay informed about current legal issues and developments to better understand the context in which lawyers operate. Overall, my current focus is on building a strong foundation of legal knowledge and skills that will prepare me for the challenges of law school and a career in law.
       Adjusting my attitude toward legal problem-solving.
     </p>
   </section>
@@ -144,7 +150,7 @@
   <section>
     <h2>Why law</h2>
     <p>
-      My goal is to contribute to a more just and equitable society through the practice of law. 
+      My goal is to contribute to a more just and equitable society through the practice of law. I would also like to familiarize myself with the legal system and how it works, and to use that knowledge to help others navigate legal issues and advocate for their rights. I am also interested in the intellectual challenge of law, as it requires critical thinking, analysis, and creativity. Additionally, I want to develop my communication skills and learn how to effectively advocate for clients and causes that I care about. Overall, I see law as a powerful tool for making a positive impact in the world and I am excited to pursue this path.
       I had a short stint in real estate law and found that I really enjoyed the problem-solving and client interaction. I want to keep exploring different areas of law to find the best fit for my skills and passions.  
     </p>
   </section>
@@ -152,10 +158,31 @@
   <button id="theme-toggle">Toggle theme</button>
 
   <script>
-    const button = document.getElementById('theme-toggle');
-    button.addEventListener('click', () => {
-      document.body.classList.toggle('light-mode');
-    });
-     </script>
+  // Theme toggle (existing code)
+  const button = document.getElementById('theme-toggle');
+  button.addEventListener('click', () => {
+    document.body.classList.toggle('light-mode');
+  });
+
+  // Scales tilt animation
+  const beam = document.getElementById('beam');
+  const maxTilt = 35; // degrees of tilt at the top of the page
+
+  function updateBeam() {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+
+    // Guard against dividing by zero if the page is too short to scroll
+    const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+
+    // Clamp progress to the 0-1 range (in case of overscroll bounce)
+    const clamped = Math.min(Math.max(progress, 0), 1);
+
+    const tilt = maxTilt * (1 - clamped);
+    beam.style.transform = `rotate(${tilt}deg)`;
+  }
+
+  updateBeam(); // run once on page load so the beam starts tilted
+  window.addEventListener('scroll', updateBeam);
+</script>
 </body>
 </html>
