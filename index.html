@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<!-- ^ Tells the browser: "this is an HTML5 document." It must be the first line. -->
+
+<html lang="en">
+<!-- ^ The root element. EVERYTHING on the page lives inside <html>...</html>.
+     lang="en" tells browsers and screen readers the page is in English. -->
+
+<head>
+  <!-- <head> holds metadata ABOUT the page. Nothing in here shows up on the page itself. -->
+
+  <meta charset="UTF-8">
+  <!-- ^ Use UTF-8 text encoding. Without this, accents, emoji, and non-English characters break. -->
+
+  <title>Derrick Song</title>
+  <!-- ^ The text that shows in the browser tab. Also what Google shows in search results. -->
+
+  <style> 
+     body {
+       font-family: system-ui, sans-serif;
+       max-width: 640px;
+       margin: 2rem auto;
+       padding: 1rem;
+       line-height: 1.6;
+       color: #81AE9D;
+       background-color: #1E1E24;
+     }
+
+     a {
+          color: #FB9F89;
+          text-decoration: none;
+     }
+
+     a:hover {
+          text-decoration: underline;
+     }
+
+     h1 {
+          color: #81AE9D;
+     }
+
+     p {
+          color: #C4AF9A;
+     }
+     body.light-mode {
+          background-color: #fafafa;
+          color: #44695a;
+     }
+
+     body.light-mode a{
+          color: #912507;
+     }
+
+      body.light-mode h1 {
+          color: #44695a;
+     }
+     
+     body.light-mode p {
+          color: #574533;
+     }
+
+     * {
+          transition: color 300ms ease, background-color 300ms ease;
+     }
+  </style>
+</head>
+
+<body>
+  <!-- <body> holds what ACTUALLY appears on the page. -->
+
+  <h1>Derrick Song
+  </h1>
+  <!-- ^ h1 = "heading level 1" — the biggest, most important heading.
+       A page should have exactly one h1. Think of it as the page's title. -->
+
+  <p>I am an aspiring law student.</p>
+  <!-- ^ p = "paragraph" — normal body text. -->
+
+  <h2>Links</h2>
+  <!-- ^ h2 = "heading level 2" — a section heading, smaller than h1.
+       The numbers (h1-h6) are semantic, not just visual size. -->
+
+  <ul>
+    <!-- ^ ul = "unordered list" — renders as bullet points. -->
+
+    <li><a href="https://www.linkedin.com/in/derrick-song-8023b720a">LinkedIn</a></li>
+    <li><a href="mailto:derricksong9@gmail.com">Email me</a></li>
+    <!-- li = "list item" (one bullet).
+         a = "anchor" (a link). The href attribute says where the link goes.
+         mailto: opens the user's email client. -->
+  </ul>
+  <button id="theme-toggle">Toggle theme</button>
+
+  <script>
+    const button = document.getElementById('theme-toggle');
+    button.addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+    });
+     </script>
+</body>
+</html>
