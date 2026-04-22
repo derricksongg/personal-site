@@ -58,15 +58,22 @@
           color: #574533;
      }
      
-     #scales {
+##scales {
     display: block;
     margin: 2rem auto;
     color: #C4AF9A;
-}
-
-    body.light-mode #scales {
-    color: #574533;
+    position: sticky;
+    top: 1rem;
+    background-color: #1E1E24;
+    padding: 1rem;
+    z-index: 10;
   }
+
+  body.light-mode #scales {
+    color: #574533;
+    background-color: #fafafa;
+  };
+
      * {
           transition: color 300ms ease, background-color 300ms ease;
      }
@@ -117,6 +124,31 @@
          a = "anchor" (a link). The href attribute says where the link goes.
          mailto: opens the user's email client. -->
   </ul>
+
+  <section>
+    <h2>About</h2>
+    <p>
+      I am currently studying for the LSAT.
+      I hope to gain admission to a reputable law school and pursue a career in law.
+    </p>
+  </section>
+
+  <section>
+    <h2>Current focus</h2>
+    <p>
+      Learning how to think like a lawyer.
+      Adjusting my attitude toward legal problem-solving.
+    </p>
+  </section>
+
+  <section>
+    <h2>Why law</h2>
+    <p>
+      My goal is to contribute to a more just and equitable society through the practice of law. 
+      I had a short stint in real estate law and found that I really enjoyed the problem-solving and client interaction. I want to keep exploring different areas of law to find the best fit for my skills and passions.  
+    </p>
+  </section>
+
   <button id="theme-toggle">Toggle theme</button>
 
   <script>
