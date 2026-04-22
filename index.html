@@ -57,7 +57,16 @@
      body.light-mode p {
           color: #574533;
      }
+     
+     #scales {
+    display: block;
+    margin: 2rem auto;
+    color: #C4AF9A;
+}
 
+    body.light-mode #scales {
+    color: #574533;
+  }
      * {
           transition: color 300ms ease, background-color 300ms ease;
      }
@@ -74,11 +83,31 @@
 
   <p>I am an aspiring law student.</p>
   <!-- ^ p = "paragraph" — normal body text. -->
+<svg id="scales" viewBox="0 0 200 160" width="200" height="160" aria-label="Scales of Justice" role="img">
+    <!-- Base of the stand -->
+    <line x1="70" y1="150" x2="130" y2="150" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+    <!-- Vertical post -->
+    <line x1="100" y1="40" x2="100" y2="150" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+    <!-- Pivot point -->
+    <circle cx="100" cy="40" r="3" fill="currentColor"/>
 
+    <!-- The beam + pans. We'll rotate this whole group later. -->
+    <g id="beam">
+      <!-- Horizontal beam -->
+      <line x1="40" y1="40" x2="160" y2="40" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+      <!-- Left chain -->
+      <line x1="40" y1="40" x2="40" y2="70" stroke="currentColor" stroke-width="2"/>
+      <!-- Left pan -->
+      <ellipse cx="40" cy="75" rx="20" ry="5" fill="none" stroke="currentColor" stroke-width="3"/>
+      <!-- Right chain -->
+      <line x1="160" y1="40" x2="160" y2="70" stroke="currentColor" stroke-width="2"/>
+      <!-- Right pan -->
+      <ellipse cx="160" cy="75" rx="20" ry="5" fill="none" stroke="currentColor" stroke-width="3"/>
+    </g>
+  </svg>
   <h2>Links</h2>
   <!-- ^ h2 = "heading level 2" — a section heading, smaller than h1.
        The numbers (h1-h6) are semantic, not just visual size. -->
-
   <ul>
     <!-- ^ ul = "unordered list" — renders as bullet points. -->
 
