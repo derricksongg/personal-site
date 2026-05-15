@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hector Acosta — Résumé</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lora:ital,wght@0,400;1,400&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    /* ── Tokens ────────────────────────────────── */
+    :root {
+      --bg:         #0C0D12;
+      --bg-card:    #131420;
+      --fg:         #EDE5D5;
+      --fg-muted:   #8B8375;
+      --accent:     #C0873B;
+      --accent-dim: #8C5E23;
+      --line:       #222436;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'Lora', Georgia, serif;
+      --font-mono:    'Space Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem 3rem;
+    }
+
+    /* ── Grain ─────────────────────────────────── */
+    .grain {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      pointer-events: none;
+      opacity: 0.032;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* ── Nav ───────────────────────────────────── */
+    .nav-back {
+      width: 100%;
+      max-width: 900px;
+      margin-bottom: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .nav-back a {
+      color: var(--fg-muted);
+      text-decoration: none;
+      transition: color 200ms ease;
+    }
+
+    .nav-back a:hover { color: var(--accent); }
+
+    /* ── Card ──────────────────────────────────── */
+    .card {
+      width: 100%;
+      max-width: 900px;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      position: relative;
+    }
+
+    /* Four corner brackets */
+    .card::before { top:    12px; left:  12px; border-width: 1px 0 0 1px; }
+    .card::after  { bottom: 12px; right: 12px; border-width: 0 1px 1px 0; }
+
+    .card::before,
+    .card::after {
+      content: '';
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border-color: var(--accent-dim);
+      border-style: solid;
+      pointer-events: none;
+    }
+
+    .corner-tr { top:    12px; right: 12px; border-width: 1px 1px 0 0; }
+    .corner-bl { bottom: 12px; left:  12px; border-width: 0 0 1px 1px; }
+
+    .corner-tr,
+    .corner-bl {
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border-color: var(--accent-dim);
+      border-style: solid;
+      pointer-events: none;
+    }
+
+    /* ── Header ────────────────────────────────── */
+    .resume-header {
+      padding: 2.5rem 3.5rem 1.75rem;
+      text-align: center;
+    }
+
+    .resume-header::after {
+      content: '';
+      display: block;
+      height: 1px;
+      margin-top: 1.75rem;
+      background: linear-gradient(90deg, transparent, var(--accent-dim) 20%, var(--accent) 50%, var(--accent-dim) 80%, transparent);
+    }
+
+    .resume-name {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--fg);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .resume-contact {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0 0.875rem;
+      font-family: var(--font-mono);
+      font-size: 0.5625rem;
+      letter-spacing: 0.1em;
+      color: var(--fg-muted);
+      font-style: normal;
+    }
+
+    .resume-contact a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .sep {
+      color: var(--accent);
+      font-size: 0.375rem;
+    }
+
+    /* ── Body grid ─────────────────────────────── */
+    .resume-body {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+    }
+
+    /* ── Sidebar ───────────────────────────────── */
+    .sidebar {
+      padding: 2rem 1.75rem 2rem 2.25rem;
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      gap: 1.625rem;
+    }
+
+    /* ── Main ──────────────────────────────────── */
+    .main {
+      padding: 2rem 2.75rem 2rem 2.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.375rem;
+    }
+
+    /* ── Section label ─────────────────────────── */
+    .label {
+      font-family: var(--font-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
+    /* ── Objective ─────────────────────────────── */
+    .objective {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--fg-muted);
+      line-height: 1.75;
+    }
+
+    /* ── Experience ────────────────────────────── */
+    .exp + .exp { margin-top: 1rem; }
+
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.15rem;
+    }
+
+    .exp-role {
+      font-family: var(--font-display);
+      font-size: 1.0625rem;
+      font-weight: 600;
+      color: var(--fg);
+      line-height: 1.2;
+    }
+
+    .exp-dates {
+      font-family: var(--font-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .exp-company {
+      font-size: 0.725rem;
+      font-style: italic;
+      color: var(--fg-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .exp-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .exp-bullets li {
+      font-size: 0.775rem;
+      color: var(--fg-muted);
+      padding-left: 1rem;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .exp-bullets li::before {
+      content: '◆';
+      position: absolute;
+      left: 0;
+      top: 0.2em;
+      font-size: 0.28rem;
+      color: var(--accent);
+    }
+
+    /* ── Education ─────────────────────────────── */
+    .edu-item + .edu-item { margin-top: 0.875rem; }
+
+    .edu-degree {
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--fg);
+      line-height: 1.3;
+    }
+
+    .edu-school {
+      font-size: 0.7rem;
+      font-style: italic;
+      color: var(--fg-muted);
+      line-height: 1.4;
+    }
+
+    .edu-year {
+      font-family: var(--font-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.08em;
+      color: var(--accent-dim);
+      margin-top: 0.1rem;
+    }
+
+    /* ── Skills ────────────────────────────────── */
+    .skill-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .skill-list li {
+      font-size: 0.7rem;
+      color: var(--fg-muted);
+      padding-left: 0.9rem;
+      position: relative;
+      line-height: 1.45;
+    }
+
+    .skill-list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--accent-dim);
+      font-size: 0.6rem;
+    }
+
+    /* ── References ────────────────────────────── */
+    .ref-text {
+      font-size: 0.7rem;
+      font-style: italic;
+      color: var(--fg-muted);
+    }
+
+    /* ── Print ─────────────────────────────────── */
+    @media print {
+      @page { size: letter; margin: 0.35in; }
+
+      body {
+        background: white;
+        color: #1a1a1a;
+        padding: 0;
+        display: block;
+      }
+
+      .grain,
+      .nav-back { display: none; }
+
+      .card {
+        max-width: 100%;
+        border: 1px solid #ccc;
+        box-shadow: none;
+      }
+
+      :root {
+        --bg-card: white;
+        --fg:         #1a1a1a;
+        --fg-muted:   #4a4a4a;
+        --accent:     #8C5E23;
+        --accent-dim: #8C5E23;
+        --line:       #d0c8bc;
+      }
+
+      .card::before,
+      .card::after,
+      .corner-tr,
+      .corner-bl { display: none; }
+    }
+
+    /* ── Responsive ────────────────────────────── */
+    @media (max-width: 640px) {
+      .resume-body { grid-template-columns: 1fr; }
+      .sidebar { border-right: none; border-bottom: 1px solid var(--line); padding: 1.5rem; }
+      .main { padding: 1.5rem; }
+      .resume-name { font-size: 2rem; letter-spacing: 0.2em; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="nav-back"><a href="index.html">← Back to site</a></div>
+
+  <div class="card">
+    <div class="corner-tr" aria-hidden="true"></div>
+    <div class="corner-bl" aria-hidden="true"></div>
+
+    <!-- Header -->
+    <header class="resume-header">
+      <h1 class="resume-name">Hector Acosta</h1>
+      <address class="resume-contact">
+        <span>56 Benjamin Drive, Staten Island, NY 10303</span>
+        <span class="sep" aria-hidden="true">◆</span>
+        <span>347-664-9697</span>
+        <span class="sep" aria-hidden="true">◆</span>
+        <a href="mailto:cuto123@hotmail.com">cuto123@hotmail.com</a>
+      </address>
+    </header>
+
+    <!-- Body -->
+    <div class="resume-body">
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+
+        <section>
+          <div class="label">Education</div>
+
+          <div class="edu-item">
+            <div class="edu-degree">B.S. Business Administration</div>
+            <div class="edu-school">Universidad Vicente Rocafuerte</div>
+            <div class="edu-year">Guayaquil, Ecuador &middot; 1984–1988</div>
+          </div>
+
+          <div class="edu-item">
+            <div class="edu-degree">Licensed Biblical Teacher</div>
+            <div class="edu-school">Biblical Institute of New York CLA</div>
+            <div class="edu-year">New York, NY &middot; 2000–2004</div>
+          </div>
+        </section>
+
+        <section>
+          <div class="label">Skills</div>
+          <ul class="skill-list">
+            <li>Bilingual — English &amp; Spanish</li>
+            <li>Team leadership &amp; development</li>
+            <li>Large-scale event coordination</li>
+            <li>Customer relations excellence</li>
+            <li>Inventory &amp; supply management</li>
+            <li>Cafeteria production oversight</li>
+          </ul>
+        </section>
+
+        <section>
+          <div class="label">Volunteer</div>
+          <ul class="skill-list">
+            <li>Food bank coordinator, Sunset Park community</li>
+            <li>Biblical Institute teacher</li>
+          </ul>
+        </section>
+
+        <section>
+          <div class="label">References</div>
+          <p class="ref-text">Available upon request.</p>
+        </section>
+
+      </aside>
+
+      <!-- Main -->
+      <main class="main">
+
+        <section>
+          <div class="label">Objective</div>
+          <p class="objective">
+            Seasoned food service professional with decades of experience coordinating large-scale catering operations and leading front- and back-of-house teams. Committed to meticulous service quality and consistently exceeding guest expectations.
+          </p>
+        </section>
+
+        <section>
+          <div class="label">Experience</div>
+
+          <div class="exp">
+            <div class="exp-header">
+              <span class="exp-role">Garde Manger Supervisor</span>
+              <span class="exp-dates">1988 – [Year] &middot; New York, NY</span>
+            </div>
+            <div class="exp-company">Aramark</div>
+            <ul class="exp-bullets">
+              <li>Planned and executed high-volume catering events — including the New York City Marathon — for groups of 10 to 1,000 guests</li>
+              <li>Supervised all Food and Beverage service operations; directed staff training, safety protocols, and professional development</li>
+              <li>Assigned duties to waitstaff and enforced rigorous food quality and service standards across all service areas</li>
+              <li>Managed daily cafeteria production and maintained supply inventory including food, tableware, coffee, and linens</li>
+              <li>Communicated menu details and cooking methods to guests; resolved complaints promptly to ensure satisfaction</li>
+            </ul>
+          </div>
+
+          <div class="exp">
+            <div class="exp-header">
+              <span class="exp-role">Customer Service &amp; HR Supervisor</span>
+              <span class="exp-dates">Feb 1985 – 1988 &middot; Guayaquil, Ecuador</span>
+            </div>
+            <div class="exp-company">Banco Bolivariano</div>
+            <ul class="exp-bullets">
+              <li>Managed the customer service department and oversaw executive personal loan accounts</li>
+              <li>Supervised Accounts Payable and directed internal bank operations including payroll and hiring</li>
+            </ul>
+          </div>
+
+        </section>
+
+      </main>
+    </div>
+  </div>
+</body>
+</html>
