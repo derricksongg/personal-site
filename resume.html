@@ -272,39 +272,47 @@
 
     /* ── Print ── */
     @media print {
-      @page { size: letter; margin: 0.28in; }
+      @page { size: letter; margin: 0.3in; }
 
       body { background: white; padding: 0; display: block; }
       .nav-back { display: none; }
       .card { max-width: 100%; box-shadow: none; border-top: 3px solid var(--gold); }
 
-      .resume-header        { padding: 1rem 2.25rem 0.875rem; }
-      .resume-header::after { margin-top: 0.875rem; }
-      .resume-name          { font-size: 2.25rem; letter-spacing: 0.3em; margin-bottom: 0.5rem; }
-      .resume-contact       { font-size: 0.49rem; }
+      /* Header — slightly tighter than screen */
+      .resume-header        { padding: 1.75rem 3.25rem 1.5rem; }
+      .resume-header::after { margin-top: 1.375rem; }
+      .resume-name          { font-size: 2.75rem; letter-spacing: 0.32em; margin-bottom: 0.75rem; }
+      .resume-contact       { font-size: 0.55rem; }
 
-      .resume-body          { grid-template-columns: 192px 1fr; }
-      .sidebar              { padding: 1.125rem 1.5rem 1.125rem 1.625rem; gap: 0.85rem; }
-      .main                 { padding: 1.125rem 2rem 1.125rem 1.875rem; gap: 0.85rem; }
+      /* Body columns */
+      .resume-body          { grid-template-columns: 208px 1fr; }
+      .sidebar              { padding: 1.625rem 1.625rem 1.625rem 1.875rem; gap: 1.5rem; }
+      .main                 { padding: 1.625rem 2.25rem 1.625rem 2.125rem; gap: 1.375rem; }
 
-      .label                { font-size: 0.43rem; margin-bottom: 0.4rem; }
-      .objective            { font-size: 0.8rem; line-height: 1.55; }
+      /* Labels */
+      .label                { font-size: 0.5rem; margin-bottom: 0.65rem; }
 
-      .exp + .exp           { margin-top: 0.7rem; }
-      .exp-role             { font-size: 1rem; }
-      .exp-dates            { font-size: 0.43rem; }
-      .exp-company          { font-size: 0.62rem; margin-bottom: 0.28rem; }
-      .exp-bullets          { gap: 0.15rem; }
-      .exp-bullets li       { font-size: 0.68rem; line-height: 1.36; padding-left: 0.85rem; }
+      /* Objective — near-screen size */
+      .objective            { font-size: 0.975rem; line-height: 1.72; }
 
-      .edu-item + .edu-item { margin-top: 0.5rem; }
-      .edu-degree           { font-size: 0.78rem; }
-      .edu-school           { font-size: 0.62rem; }
-      .edu-year             { font-size: 0.43rem; }
+      /* Experience — near-screen size */
+      .exp + .exp           { margin-top: 1rem; }
+      .exp-role             { font-size: 1.075rem; }
+      .exp-dates            { font-size: 0.5rem; }
+      .exp-company          { font-size: 0.7rem; margin-bottom: 0.425rem; }
+      .exp-bullets          { gap: 0.27rem; }
+      .exp-bullets li       { font-size: 0.79rem; line-height: 1.5; padding-left: 0.95rem; }
 
-      .skill-list           { gap: 0.18rem; }
-      .skill-list li        { font-size: 0.62rem; line-height: 1.33; padding-left: 0.75rem; }
-      .ref-text             { font-size: 0.62rem; }
+      /* Education */
+      .edu-item + .edu-item { margin-top: 0.8rem; }
+      .edu-degree           { font-size: 0.875rem; }
+      .edu-school           { font-size: 0.68rem; }
+      .edu-year             { font-size: 0.5rem; }
+
+      /* Skills & volunteer */
+      .skill-list           { gap: 0.33rem; }
+      .skill-list li        { font-size: 0.68rem; line-height: 1.43; padding-left: 0.85rem; }
+      .ref-text             { font-size: 0.68rem; }
     }
 
     /* ── Mobile ── */
