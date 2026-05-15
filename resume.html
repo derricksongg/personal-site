@@ -8,84 +8,84 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lora:ital,wght@0,400;1,400&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
   <style>
-    /* ── Tokens ────────────────────────────────── */
+    /* ── Tokens ── */
     :root {
-      --navy:          #16284A;
-      --navy-mid:      #1E3560;
-      --cream:         #F8F4EE;
-      --fg:            #1C2B3A;
-      --fg-muted:      #5A6778;
-      --gold:          #C4972A;
-      --gold-dim:      #9B7420;
-      --side-fg:       #EDE5D5;
-      --side-muted:    rgba(237, 229, 213, 0.62);
-      --side-line:     rgba(255, 255, 255, 0.11);
-      --main-line:     #DDD5C8;
-      --font-display:  'Cormorant Garamond', Georgia, serif;
-      --font-body:     'Lora', Georgia, serif;
-      --font-mono:     'Space Mono', monospace;
+      --forest:      #1B3D2F;
+      --forest-deep: #132D22;
+      --ivory:       #FAF7F0;
+      --fg:          #1E3025;
+      --fg-muted:    #4E6558;
+      --gold:        #C9982C;
+      --gold-dim:    #9D7520;
+      --side-fg:     #E8F2EC;
+      --side-muted:  rgba(232, 242, 236, 0.62);
+      --side-line:   rgba(255, 255, 255, 0.11);
+      --main-line:   #D2CCC0;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'Lora', Georgia, serif;
+      --font-mono:    'Space Mono', monospace;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: #DDD8D1;
+      background: #C8D2C4;
       font-family: var(--font-body);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2rem 1rem 3rem;
+      padding: 2.5rem 1rem 4rem;
     }
 
     /* ── Nav ── */
     .nav-back {
       width: 100%;
-      max-width: 900px;
-      margin-bottom: 0.875rem;
+      max-width: 920px;
+      margin-bottom: 1rem;
       font-family: var(--font-mono);
       font-size: 0.6rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
     }
 
-    .nav-back a { color: #5A5550; text-decoration: none; transition: color 200ms ease; }
-    .nav-back a:hover { color: var(--navy); }
+    .nav-back a { color: #4A5A46; text-decoration: none; transition: color 200ms ease; }
+    .nav-back a:hover { color: var(--forest); }
 
     /* ── Card ── */
     .card {
       width: 100%;
-      max-width: 900px;
-      background: var(--cream);
-      box-shadow: 0 6px 40px rgba(22, 40, 74, 0.2);
-      border-top: 3px solid var(--gold);
+      max-width: 920px;
+      background: var(--ivory);
+      box-shadow: 0 8px 48px rgba(27, 61, 47, 0.22);
+      border-top: 4px solid var(--gold);
       overflow: hidden;
     }
 
     /* ── Header ── */
     .resume-header {
-      padding: 2.25rem 3.5rem 1.75rem;
+      padding: 2.75rem 4rem 2.25rem;
       text-align: center;
-      background: var(--cream);
+      background: var(--ivory);
     }
 
     .resume-header::after {
       content: '';
       display: block;
       height: 1px;
-      margin-top: 1.625rem;
+      margin-top: 1.875rem;
       background: linear-gradient(90deg, transparent, var(--gold-dim) 20%, var(--gold) 50%, var(--gold-dim) 80%, transparent);
     }
 
     .resume-name {
       font-family: var(--font-display);
-      font-size: 3.125rem;
+      font-size: 3.375rem;
       font-weight: 300;
-      letter-spacing: 0.35em;
+      letter-spacing: 0.38em;
       text-transform: uppercase;
-      color: var(--navy);
+      color: var(--forest);
       line-height: 1;
-      margin-bottom: 0.875rem;
+      margin-bottom: 1rem;
     }
 
     .resume-contact {
@@ -93,7 +93,7 @@
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
-      gap: 0 0.875rem;
+      gap: 0 1rem;
       font-family: var(--font-mono);
       font-size: 0.5625rem;
       letter-spacing: 0.1em;
@@ -102,60 +102,60 @@
     }
 
     .resume-contact a { color: inherit; text-decoration: none; }
-    .sep { color: var(--gold); font-size: 0.375rem; }
+    .sep { color: var(--gold); font-size: 0.4rem; }
 
     /* ── Body grid ── */
-    .resume-body { display: grid; grid-template-columns: 218px 1fr; }
+    .resume-body { display: grid; grid-template-columns: 228px 1fr; }
 
     /* ── Sidebar ── */
     .sidebar {
-      background: var(--navy);
-      padding: 2rem 1.75rem 2rem 2rem;
+      background: var(--forest);
+      padding: 2.25rem 2rem 2.25rem 2.25rem;
       display: flex;
       flex-direction: column;
-      gap: 1.625rem;
+      gap: 2rem;
     }
 
     /* ── Main ── */
     .main {
-      padding: 2rem 2.625rem 2rem 2.375rem;
+      padding: 2.25rem 2.875rem 2.25rem 2.625rem;
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
-      background: var(--cream);
+      gap: 1.875rem;
+      background: var(--ivory);
     }
 
     /* ── Section label ── */
     .label {
       font-family: var(--font-mono);
       font-size: 0.5rem;
-      letter-spacing: 0.28em;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
       display: flex;
       align-items: center;
-      gap: 0.65rem;
-      margin-bottom: 0.75rem;
+      gap: 0.7rem;
+      margin-bottom: 0.875rem;
     }
 
     .label::after { content: ''; flex: 1; height: 1px; }
 
     .sidebar .label { color: var(--gold); }
     .sidebar .label::after { background: var(--side-line); }
-    .main    .label { color: var(--navy); }
+    .main    .label { color: var(--forest); }
     .main    .label::after { background: var(--main-line); }
 
     /* ── Objective ── */
     .objective {
       font-family: var(--font-display);
-      font-size: 1.0rem;
+      font-size: 1.125rem;
       font-style: italic;
       font-weight: 300;
       color: var(--fg-muted);
-      line-height: 1.78;
+      line-height: 1.85;
     }
 
     /* ── Experience ── */
-    .exp + .exp { margin-top: 1.125rem; }
+    .exp + .exp { margin-top: 1.375rem; }
 
     .exp-header {
       display: flex;
@@ -163,14 +163,14 @@
       align-items: baseline;
       gap: 1rem;
       flex-wrap: wrap;
-      margin-bottom: 0.15rem;
+      margin-bottom: 0.2rem;
     }
 
     .exp-role {
       font-family: var(--font-display);
-      font-size: 1.125rem;
+      font-size: 1.25rem;
       font-weight: 600;
-      color: var(--navy);
+      color: var(--forest);
       line-height: 1.2;
     }
 
@@ -183,52 +183,52 @@
     }
 
     .exp-company {
-      font-size: 0.725rem;
+      font-size: 0.8rem;
       font-style: italic;
       color: var(--fg-muted);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.625rem;
     }
 
     .exp-bullets {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0.28rem;
+      gap: 0.4rem;
     }
 
     .exp-bullets li {
-      font-size: 0.8rem;
+      font-size: 0.875rem;
       color: var(--fg-muted);
-      padding-left: 1rem;
+      padding-left: 1.125rem;
       position: relative;
-      line-height: 1.5;
+      line-height: 1.62;
     }
 
     .exp-bullets li::before {
       content: '◆';
       position: absolute;
       left: 0;
-      top: 0.22em;
-      font-size: 0.28rem;
+      top: 0.25em;
+      font-size: 0.3rem;
       color: var(--gold);
     }
 
     /* ── Education ── */
-    .edu-item + .edu-item { margin-top: 0.875rem; }
+    .edu-item + .edu-item { margin-top: 1.125rem; }
 
     .edu-degree {
       font-family: var(--font-display);
-      font-size: 0.9rem;
+      font-size: 0.975rem;
       font-weight: 600;
       color: var(--side-fg);
       line-height: 1.3;
     }
 
     .edu-school {
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       font-style: italic;
       color: var(--side-muted);
-      line-height: 1.4;
+      line-height: 1.45;
     }
 
     .edu-year {
@@ -236,23 +236,23 @@
       font-size: 0.5rem;
       letter-spacing: 0.08em;
       color: var(--gold-dim);
-      margin-top: 0.1rem;
+      margin-top: 0.15rem;
     }
 
-    /* ── Skill / volunteer lists ── */
+    /* ── Skills & volunteer ── */
     .skill-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0.35rem;
+      gap: 0.475rem;
     }
 
     .skill-list li {
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       color: var(--side-muted);
-      padding-left: 0.875rem;
+      padding-left: 1rem;
       position: relative;
-      line-height: 1.45;
+      line-height: 1.5;
     }
 
     .skill-list li::before {
@@ -260,12 +260,12 @@
       position: absolute;
       left: 0;
       color: var(--gold-dim);
-      font-size: 0.6rem;
+      font-size: 0.65rem;
     }
 
     /* ── References ── */
     .ref-text {
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       font-style: italic;
       color: var(--side-muted);
     }
@@ -276,51 +276,51 @@
 
       body { background: white; padding: 0; display: block; }
       .nav-back { display: none; }
-      .card { max-width: 100%; box-shadow: none; border-top: 3px solid var(--gold); }
+      .card { max-width: 100%; box-shadow: none; border-top: 4px solid var(--gold); }
 
-      /* Header — slightly tighter than screen */
-      .resume-header        { padding: 1.75rem 3.25rem 1.5rem; }
-      .resume-header::after { margin-top: 1.375rem; }
-      .resume-name          { font-size: 2.75rem; letter-spacing: 0.32em; margin-bottom: 0.75rem; }
-      .resume-contact       { font-size: 0.55rem; }
+      /* Header */
+      .resume-header        { padding: 2.25rem 3.5rem 1.875rem; }
+      .resume-header::after { margin-top: 1.625rem; }
+      .resume-name          { font-size: 3rem; letter-spacing: 0.35em; margin-bottom: 0.875rem; }
+      .resume-contact       { font-size: 0.5625rem; }
 
-      /* Body columns */
-      .resume-body          { grid-template-columns: 208px 1fr; }
-      .sidebar              { padding: 1.625rem 1.625rem 1.625rem 1.875rem; gap: 1.5rem; }
-      .main                 { padding: 1.625rem 2.25rem 1.625rem 2.125rem; gap: 1.375rem; }
+      /* Body */
+      .resume-body          { grid-template-columns: 218px 1fr; }
+      .sidebar              { padding: 2rem 1.875rem 2rem 2.125rem; gap: 1.75rem; }
+      .main                 { padding: 2rem 2.625rem 2rem 2.375rem; gap: 1.625rem; }
 
       /* Labels */
-      .label                { font-size: 0.5rem; margin-bottom: 0.65rem; }
+      .label                { font-size: 0.5rem; margin-bottom: 0.8rem; }
 
-      /* Objective — near-screen size */
-      .objective            { font-size: 0.975rem; line-height: 1.72; }
+      /* Objective */
+      .objective            { font-size: 1.075rem; line-height: 1.8; }
 
-      /* Experience — near-screen size */
-      .exp + .exp           { margin-top: 1rem; }
-      .exp-role             { font-size: 1.075rem; }
+      /* Experience */
+      .exp + .exp           { margin-top: 1.25rem; }
+      .exp-role             { font-size: 1.175rem; }
       .exp-dates            { font-size: 0.5rem; }
-      .exp-company          { font-size: 0.7rem; margin-bottom: 0.425rem; }
-      .exp-bullets          { gap: 0.27rem; }
-      .exp-bullets li       { font-size: 0.79rem; line-height: 1.5; padding-left: 0.95rem; }
+      .exp-company          { font-size: 0.775rem; margin-bottom: 0.575rem; }
+      .exp-bullets          { gap: 0.375rem; }
+      .exp-bullets li       { font-size: 0.85rem; line-height: 1.58; padding-left: 1.075rem; }
 
       /* Education */
-      .edu-item + .edu-item { margin-top: 0.8rem; }
-      .edu-degree           { font-size: 0.875rem; }
-      .edu-school           { font-size: 0.68rem; }
+      .edu-item + .edu-item { margin-top: 1rem; }
+      .edu-degree           { font-size: 0.925rem; }
+      .edu-school           { font-size: 0.725rem; }
       .edu-year             { font-size: 0.5rem; }
 
-      /* Skills & volunteer */
-      .skill-list           { gap: 0.33rem; }
-      .skill-list li        { font-size: 0.68rem; line-height: 1.43; padding-left: 0.85rem; }
-      .ref-text             { font-size: 0.68rem; }
+      /* Skills */
+      .skill-list           { gap: 0.425rem; }
+      .skill-list li        { font-size: 0.725rem; line-height: 1.48; padding-left: 0.95rem; }
+      .ref-text             { font-size: 0.725rem; }
     }
 
     /* ── Mobile ── */
     @media (max-width: 640px) {
       .resume-body { grid-template-columns: 1fr; }
-      .sidebar { padding: 1.5rem; }
-      .main { padding: 1.5rem; }
-      .resume-name { font-size: 2rem; letter-spacing: 0.2em; }
+      .sidebar { padding: 1.75rem; }
+      .main { padding: 1.75rem; }
+      .resume-name { font-size: 2.25rem; letter-spacing: 0.2em; }
     }
   </style>
 </head>
@@ -345,7 +345,7 @@
     <!-- ── Body ── -->
     <div class="resume-body">
 
-      <!-- Navy sidebar -->
+      <!-- Forest green sidebar -->
       <aside class="sidebar">
 
         <section>
@@ -391,7 +391,7 @@
 
       </aside>
 
-      <!-- Cream main content -->
+      <!-- Ivory main content -->
       <main class="main">
 
         <section>
